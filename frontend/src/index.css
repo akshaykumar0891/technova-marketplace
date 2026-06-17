@@ -1,0 +1,75 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Poppins', 'Inter', sans-serif;
+  
+  /* Color theme tokens matching Document 04 Design Brief */
+  --color-primary-dark: #0f172a; /* Slate 900 */
+  --color-secondary-blue: #2563eb; /* Blue 600 */
+  --color-accent-blue: #3b82f6; /* Blue 500 */
+  --color-canvas-bg: #f8fafc; /* Slate 50 */
+  --color-card-bg: #ffffff;
+  --color-text-dark: #1e293b; /* Slate 800 */
+}
+
+/* Custom premium styles */
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-canvas-bg);
+  color: var(--color-text-dark);
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom animations & scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Premium glassmorphism effect utility */
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.dark-glass {
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Disable tap highlight color on mobile touch devices */
+a, button, [role="button"], select, input, textarea {
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+/* Category Card Touch and Hover Optimization */
+@media (hover: hover) {
+  .category-card:hover {
+    border-color: var(--color-accent-blue);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  }
+  .category-card:hover .category-icon {
+    background-color: var(--color-secondary-blue);
+    color: #ffffff !important;
+  }
+  .category-card:hover .category-title {
+    color: var(--color-secondary-blue);
+  }
+}

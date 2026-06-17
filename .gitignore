@@ -1,0 +1,34 @@
+# Dependencies
+**/node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Local Database Files
+backend/technova.db
+backend/technova.db-journal
+
+# Environment Variables & Secret Credentials
+backend/.env
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Production Builds
+frontend/dist/
+dist/
+
+# Editor / System Files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

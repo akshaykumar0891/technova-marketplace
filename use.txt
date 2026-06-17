@@ -1,0 +1,104 @@
+# TechNova Marketplace – Completion Walkthrough
+
+TechNova Marketplace is a full-stack electronics e-commerce platform designed for premium shopping. The codebase is complete, modular, and optimized for both local development (using SQLite) and production deployment (using MySQL).
+
+---
+
+## 1. Project Directory Structure
+
+Here is a look at the files created inside your workspace:
+
+### Backend Structure (`backend/`)
+- [db.js](file:///d:/ak%20apps/TechNova%20Marketplace/backend/config/db.js): Database connection adapter supporting SQLite/MySQL auto-migrations & seeds.
+- [authController.js](file:///d:/ak%20apps/TechNova%20Marketplace/backend/controllers/authController.js): Hashing, login verification, and profile handling.
+- [productController.js](file:///d:/ak%20apps/TechNova%20Marketplace/backend/controllers/productController.js): Product filters (brand, category, price) and catalog listing.
+- [cartController.js](file:///d:/ak%20apps/TechNova%20Marketplace/backend/controllers/cartController.js): Core shopping cart API with inventory count validation.
+- [orderController.js](file:///d:/ak%20apps/TechNova%20Marketplace/backend/controllers/orderController.js): Checkout transactions, stock reductions, and order history.
+- [adminController.js](file:///d:/ak%20apps/TechNova%20Marketplace/backend/controllers/adminController.js): Aggregate metrics, order modifications, and user list.
+- [authMiddleware.js](file:///d:/ak%20apps/TechNova%20Marketplace/backend/middleware/authMiddleware.js): JWT check and administrator permission gate.
+- [server.js](file:///d:/ak%20apps/TechNova%20Marketplace/backend/server.js): Server listener mounting routers and CORS configurations.
+
+### Frontend Structure (`frontend/`)
+- [App.jsx](file:///d:/ak%20apps/TechNova%20Marketplace/frontend/src/App.jsx): Central React Router mounting pages under context wrappers.
+- [AuthContext.jsx](file:///d:/ak%20apps/TechNova%20Marketplace/frontend/src/context/AuthContext.jsx): Stores login state, token, and addresses list.
+- [CartContext.jsx](file:///d:/ak%20apps/TechNova%20Marketplace/frontend/src/context/CartContext.jsx): Stores cart item counts and coordinates with backend API.
+- [Navbar.jsx](file:///d:/ak%20apps/TechNova%20Marketplace/frontend/src/components/Navbar.jsx): Navigation bar with category loader and dynamic cart badge.
+- [index.css](file:///d:/ak%20apps/TechNova%20Marketplace/frontend/src/index.css): Integrates Tailwind CSS v4, Poppins fonts, and glass effects.
+- **Pages**: [Home.jsx](file:///d:/ak%20apps/TechNova%20Marketplace/frontend/src/pages/Home.jsx), [ProductCatalog.jsx](file:///d:/ak%20apps/TechNova%20Marketplace/frontend/src/pages/ProductCatalog.jsx), [ProductDetails.jsx](file:///d:/ak%20apps/TechNova%20Marketplace/frontend/src/pages/ProductDetails.jsx), [Cart.jsx](file:///d:/ak%20apps/TechNova%20Marketplace/frontend/src/pages/Cart.jsx), [Checkout.jsx](file:///d:/ak%20apps/TechNova%20Marketplace/frontend/src/pages/Checkout.jsx), [Orders.jsx](file:///d:/ak%20apps/TechNova%20Marketplace/frontend/src/pages/Orders.jsx), [Profile.jsx](file:///d:/ak%20apps/TechNova%20Marketplace/frontend/src/pages/Profile.jsx), [Login.jsx](file:///d:/ak%20apps/TechNova%20Marketplace/frontend/src/pages/Login.jsx), [Register.jsx](file:///d:/ak%20apps/TechNova%20Marketplace/frontend/src/pages/Register.jsx).
+- **Admin Panel**: [AdminDashboard.jsx](file:///d:/ak%20apps/TechNova%20Marketplace/frontend/src/pages/admin/AdminDashboard.jsx), [AdminProducts.jsx](file:///d:/ak%20apps/TechNova%20Marketplace/frontend/src/pages/admin/AdminProducts.jsx), [AdminOrders.jsx](file:///d:/ak%20apps/TechNova%20Marketplace/frontend/src/pages/admin/AdminOrders.jsx), [AdminUsers.jsx](file:///d:/ak%20apps/TechNova%20Marketplace/frontend/src/pages/admin/AdminUsers.jsx).
+
+---
+
+## 2. Local Run Instructions
+
+Both the backend and frontend servers are currently configured and running in background processes:
+- **Backend Server**: Running at [http://localhost:5000](http://localhost:5000)
+- **Frontend client**: Running at [http://localhost:5173](http://localhost:5173)
+
+### Running manually in the future:
+1. **Backend**:
+   ```bash
+   cd backend
+   npm run dev
+   ```
+2. **Frontend**:
+   ```bash
+   cd frontend
+   npm run dev
+   ```
+
+### Pre-seeded Demo Accounts for immediate testing:
+- **Customer Account**:
+  - **Email**: `customer@technova.com`
+  - **Password**: `customer123`
+- **Admin Account**:
+  - **Email**: `admin@technova.com`
+  - **Password**: `admin123`
+
+---
+
+## 3. Production Deployment Guide
+
+Since you mentioned you are publishing this project online, follow these steps to deploy it:
+
+### Step 1: Deploy the Database (Cloud MySQL)
+1. Register on a database hosting provider (e.g., [Aiven](https://aiven.io/), [Clever Cloud](https://www.clever-cloud.com/), or [ScaleGrid](https://scalegrid.io/)).
+2. Create a new **MySQL** database instance.
+3. Note the database connection variables (Host, Port, User, Password, DB Name).
+
+### Step 2: Deploy the Backend API (Render / Railway)
+1. Push your project folder to a GitHub repository.
+2. Sign in to [Render](https://render.com/) and create a new **Web Service** linked to your backend repository.
+3. Configure build/start parameters:
+   - **Root Directory**: `backend`
+   - **Build Command**: `npm install`
+   - **Start Command**: `npm start`
+4. Set up the following **Environment Variables** in Render's dashboard settings:
+   - `DB_TYPE` = `mysql`
+   - `DB_HOST` = *(Your Cloud MySQL Host)*
+   - `DB_USER` = *(Your Cloud MySQL Username)*
+   - `DB_PASSWORD` = *(Your Cloud MySQL Password)*
+   - `DB_NAME` = *(Your Cloud MySQL DB Name)*
+   - `DB_PORT` = `3306` (or database port)
+   - `JWT_SECRET` = *(Generate a long secret string)*
+   - `PORT` = `10000` (Render allocates this automatically)
+5. Save. Your backend will build and start, creating the tables in the MySQL database. Copy the backend API url (e.g., `https://technova-api.onrender.com`).
+
+### Step 3: Deploy the Frontend SPA (Vercel / Netlify)
+1. Sign in to [Vercel](https://vercel.com/) and create a new project linked to your GitHub repository.
+2. Configure build parameters:
+   - **Root Directory**: `frontend`
+   - **Framework Preset**: `Vite`
+   - **Build Command**: `npm run build`
+   - **Output Directory**: `dist`
+3. Set the following **Environment Variable** in Vercel's settings:
+   - `VITE_API_URL` = `https://technova-api.onrender.com/api` *(Your live Render backend URL, appended with /api)*
+4. Click **Deploy**. Vercel will build your static files and publish them to a live domain name (e.g., `https://technova-marketplace.vercel.app`).
+
+
+### Admin User Setup Guide
+Since default demo accounts have been deleted for production deployment, follow these steps to add your first administrator:
+1. Launch the site, navigate to `/register`, and create a regular account.
+2. Log into your database console and execute:
+   `UPDATE users SET role = 'admin' WHERE email = 'your_registered_email@example.com';`
+3. Log in again on the site to access the Admin Console.
