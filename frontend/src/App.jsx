@@ -9,6 +9,7 @@ import { CartProvider } from './context/CartContext';
 // Components
 import Navbar from './components/Navbar';
 import ProtectedRoute from './components/ProtectedRoute';
+import ChatBot from './components/ChatBot';
 
 // Storefront Pages
 import Home from './pages/Home';
@@ -37,6 +38,9 @@ const StorefrontLayout = ({ children }) => {
       <main className="flex-grow">
         {children}
       </main>
+      
+      {/* AI Chatbot Assistant */}
+      <ChatBot />
       
       {/* Premium Footer */}
       <footer className="bg-slate-900 text-slate-400 border-t border-slate-800 mt-20">
