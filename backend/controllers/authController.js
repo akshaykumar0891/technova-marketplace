@@ -31,17 +31,21 @@ async function register(req, res) {
     // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
+    // Determine role (elevate to admin if matching ADMIN_EMAIL env variable)
+    const adminEmail = process.env.ADMIN_EMAIL;
+    const role = (adminEmail && email.toLowerCase() === adminEmail.toLowerCase().trim()) ? 'admin' : 'customer';
+
     // Insert user
     const result = await db.query(
       'INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)',
-      [name, email, hashedPassword, 'customer']
+      [name, email, hashedPassword, role]
     );
 
     const userId = result.insertId;
 
     // Create JWT token
     const token = jwt.sign(
-      { id: userId, email, role: 'customer', name },
+      { id: userId, email, role, name },
       process.env.JWT_SECRET,
       { expiresIn: '24h' }
     );
@@ -52,7 +56,7 @@ async function register(req, res) {
         id: userId,
         name,
         email,
-        role: 'customer'
+        role
       }
     });
 

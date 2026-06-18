@@ -226,6 +226,20 @@ async function initializeDatabase() {
       // Column already exists, ignore error
     }
 
+    // Auto-elevate admin email if provided in env
+    const adminEmail = process.env.ADMIN_EMAIL;
+    if (adminEmail) {
+      console.log(`Checking for admin email auto-elevation: ${adminEmail}`);
+      try {
+        const updateRes = await query("UPDATE users SET role = 'admin' WHERE email = ?", [adminEmail.toLowerCase().trim()]);
+        if (updateRes.affectedRows > 0) {
+          console.log(`Successfully elevated ${adminEmail} to admin.`);
+        }
+      } catch (e) {
+        console.error('Error during auto-admin elevation:', e);
+      }
+    }
+
     console.log('Database tables verified/created successfully.');
     
     // Seed default categories, products, and users if tables are empty
