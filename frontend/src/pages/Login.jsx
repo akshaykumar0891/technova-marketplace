@@ -122,20 +122,6 @@ const Login = () => {
           </button>
         </form>
 
-        <hr className="border-slate-100" />
-
-        {/* Demo accounts hint */}
-        <div className="bg-slate-50 border border-slate-200 p-3 rounded-lg text-xs text-slate-500 space-y-1.5">
-          <div className="flex items-center gap-1 font-semibold text-slate-700">
-            <ShieldAlert size={14} className="text-blue-500" />
-            <span>Pre-seeded Demo Accounts:</span>
-          </div>
-          <div>
-            <p><span className="font-semibold text-slate-600">Customer:</span> customer@technova.com / customer123</p>
-            <p><span className="font-semibold text-slate-600">Admin:</span> admin@technova.com / admin123</p>
-          </div>
-        </div>
-
         {/* Redirect toggle */}
         <div className="text-center">
           <p className="text-sm text-slate-500">
